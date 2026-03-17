@@ -18,50 +18,36 @@ Read the csv file.
 
 ## Program:
 ```
+# Developed by: Aswin.L
+# RegisterNumber: 212224230028
 
+import pandas as pd
+from sklearn import linear_model
 
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.datasets import fetch_california_housing
+df = pd.read_csv("cars.csv")
 
-housing = fetch_california_housing()
-X = housing.data
-y = housing.target
+x = df[['Weight','Volume']]
+y = df['CO2']
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.4, random_state=1
-)
+regr = linear_model.LinearRegression()
+regr.fit(x,y)
 
-reg = LinearRegression()
-reg.fit(X_train, y_train)
+print('Coefficients:', regr.coef_)
+print('Intercept:', regr.intercept_)
 
-print("Coefficients:", reg.coef_)
-print("Variance score:", reg.score(X_test, y_test))
+new_data = pd.DataFrame([[3300,1300]], columns=['Weight','Volume'])
 
-plt.style.use('fivethirtyeight')
+predictedCO2 = regr.predict(new_data)
 
-plt.scatter(reg.predict(X_train),
-            reg.predict(X_train) - y_train,
-            color="green", s=10, label="Train data")
-
-plt.scatter(reg.predict(X_test),
-            reg.predict(X_test) - y_test,
-            color="blue", s=10, label="Test data")
-
-plt.hlines(y=0, xmin=0, xmax=5, linewidth=2)
-
-plt.legend(loc="upper right")
-plt.title("Residual errors")
-plt.show()
+print('Predicted CO2 for the corresponding weight and volume:', predictedCO2)
 
 ```
 ## Output:
 
 ### Insert your output
 
-<img width="1177" height="684" alt="image" src="https://github.com/user-attachments/assets/c0bbc8da-e5aa-406d-bba1-a14e3e4fb3a3" />
+<img width="745" height="89" alt="image" src="https://github.com/user-attachments/assets/cef056df-3120-4c34-822f-42ab15f3b784" />
+
 
 
 
